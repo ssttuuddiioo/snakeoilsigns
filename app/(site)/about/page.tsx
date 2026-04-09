@@ -81,7 +81,7 @@ export default async function AboutPage() {
         {/* Bio text */}
         <FadeIn delay={150}>
           <div>
-            <h1 className="font-display text-4xl md:text-5xl uppercase tracking-wide text-ink leading-[1.1] mb-8">
+            <h1 className="font-accent text-6xl md:text-7xl lg:text-8xl text-ink leading-[0.95] mb-8">
               {about?.heading || "About"}
             </h1>
             {about?.bio ? (

@@ -21,6 +21,7 @@ const config: Config = {
       fontFamily: {
         display: ["var(--font-display)", "sans-serif"],
         body: ["var(--font-dm)", "sans-serif"],
+        accent: ["var(--font-accent)", "cursive"],
       },
       letterSpacing: {
         display: "0.08em",
