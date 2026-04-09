@@ -12,6 +12,7 @@ export default defineConfig({
   title: "Snake Oil Signs",
   projectId,
   dataset,
+  basePath: "/studio",
   plugins: [structureTool({ structure }), visionTool()],
   schema,
 });
