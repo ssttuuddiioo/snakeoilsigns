@@ -1,4 +1,4 @@
-export const revalidate = 30;
+export const revalidate = 5;
 
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";

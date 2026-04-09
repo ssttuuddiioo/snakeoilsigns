@@ -1,4 +1,4 @@
-export const revalidate = 30;
+export const revalidate = 5;
 
 import Image from "next/image";
 import Link from "next/link";
