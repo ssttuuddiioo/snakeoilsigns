@@ -4,7 +4,10 @@ import { aboutPageQuery } from "@/sanity/lib/queries";
 import { urlFor } from "@/sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import VideoEmbed from "@/components/VideoEmbed";
+import CleanVideo from "@/components/CleanVideo";
 import FadeIn from "@/components/FadeIn";
+
+const DEFAULT_VIDEO_ID = "eCO_i8ORwHo";
 
 const DEFAULT_EXPERIENCE = [
   {
@@ -55,8 +58,16 @@ export default async function AboutPage() {
     : DEFAULT_EDUCATION;
 
   return (
-    <div className="pt-28 md:pt-36 pb-24 md:pb-36 px-6 md:px-10 max-w-content mx-auto">
+    <div className="pt-28 md:pt-36 pb-24 md:pb-36">
+      {/* Video — full width above everything */}
+      <FadeIn>
+        <div className="px-6 md:px-10 max-w-content mx-auto mb-16 md:mb-24">
+          <CleanVideo youtubeId={DEFAULT_VIDEO_ID} />
+        </div>
+      </FadeIn>
+
       {/* Bio section: two columns */}
+      <div className="px-6 md:px-10 max-w-content mx-auto">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
         {/* Photo */}
         <FadeIn>
@@ -99,15 +110,6 @@ export default async function AboutPage() {
           </div>
         </FadeIn>
       </div>
-
-      {/* Video */}
-      {about?.videoUrl && (
-        <FadeIn>
-          <section className="mt-24 md:mt-32 max-w-4xl mx-auto">
-            <VideoEmbed url={about.videoUrl} caption={about.videoCaption} />
-          </section>
-        </FadeIn>
-      )}
 
       {/* Experience */}
       <section className="mt-24 md:mt-32">
@@ -181,6 +183,7 @@ export default async function AboutPage() {
           <p className="text-base text-ink">{DEFAULT_TRAINING}</p>
         </FadeIn>
       </section>
+      </div>
     </div>
   );
 }
