@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { urlFor } from "@/sanity/lib/image";
 
 interface NavProps {
@@ -21,6 +22,8 @@ const NAV_LINKS = [
 export default function Nav({ logo, siteTitle }: NavProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -35,14 +38,23 @@ export default function Nav({ logo, siteTitle }: NavProps) {
     };
   }, [menuOpen]);
 
+  // Colors based on page
+  const navBg = scrolled
+    ? isHome
+      ? "bg-ink/95 backdrop-blur-md"
+      : "bg-[#fafafa]/95 backdrop-blur-md shadow-[0_1px_0_0_rgba(0,0,0,0.06)]"
+    : "bg-transparent";
+
+  const textColor = isHome ? "text-white" : "text-ink";
+  const linkColor = isHome
+    ? "text-white/70 hover:text-rust"
+    : "text-ink/70 hover:text-rust";
+  const logoColor = isHome ? "text-white" : "text-ink";
+
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? "bg-ink/95 backdrop-blur-md"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}
       >
         <div className="max-w-content mx-auto flex items-center justify-between px-6 py-5 md:px-12 md:py-6">
           {/* Logo */}
@@ -56,7 +68,7 @@ export default function Nav({ logo, siteTitle }: NavProps) {
                 className="h-8 w-auto"
               />
             ) : (
-              <span className="font-display text-lg md:text-xl text-white uppercase">
+              <span className={`font-display text-lg md:text-xl uppercase ${logoColor}`}>
                 {siteTitle || "Snake Oil Signs"}
               </span>
             )}
@@ -68,7 +80,7 @@ export default function Nav({ logo, siteTitle }: NavProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-display text-base xl:text-lg uppercase text-white/70 hover:text-rust transition-colors duration-200"
+                className={`font-display text-base xl:text-lg uppercase transition-colors duration-200 ${linkColor}`}
               >
                 {link.label}
               </Link>
@@ -81,7 +93,7 @@ export default function Nav({ logo, siteTitle }: NavProps) {
             className="relative z-10 lg:hidden flex items-center gap-2"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            <span className="font-display text-base uppercase text-white">
+            <span className={`font-display text-base uppercase ${menuOpen ? "text-white" : textColor}`}>
               {menuOpen ? "CLOSE" : "MENU"}
             </span>
           </button>
