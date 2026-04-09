@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
+  body {
+    color: #0a0a0a;
+    background-color: #f5f0eb;
+  }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  ::selection {
+    background-color: #c83c2c;
+    color: #fff;
+  }
+
+  /* Focus styles for keyboard nav */
+  *:focus-visible {
+    outline: 2px solid #c83c2c;
+    outline-offset: 2px;
+  }
+
+  *:focus:not(:focus-visible) {
+    outline: none;
   }
 }
