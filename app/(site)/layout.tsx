@@ -1,3 +1,5 @@
+export const revalidate = 30;
+
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import { client } from "@/sanity/lib/client";
