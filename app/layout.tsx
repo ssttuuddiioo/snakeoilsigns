@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Special_Gothic_Expanded_One, Boldonse } from "next/font/google";
+import { DM_Sans, Special_Gothic_Expanded_One } from "next/font/google";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -15,13 +15,6 @@ const specialGothic = Special_Gothic_Expanded_One({
   display: "swap",
 });
 
-const boldonse = Boldonse({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-accent",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "Snake Oil Signs",
   description:
@@ -34,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${specialGothic.variable} ${boldonse.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${specialGothic.variable}`}>
       <body className="font-body antialiased">{children}</body>
     </html>
   );
