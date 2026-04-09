@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Sans } from "next/font/google";
+import { DM_Sans, Special_Gothic_Expanded_One } from "next/font/google";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -8,9 +8,10 @@ const dmSans = DM_Sans({
   display: "swap",
 });
 
-const instrumentSans = Instrument_Sans({
+const specialGothic = Special_Gothic_Expanded_One({
+  weight: "400",
   subsets: ["latin"],
-  variable: "--font-instrument",
+  variable: "--font-display",
   display: "swap",
 });
 
@@ -26,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${instrumentSans.variable}`}>
+    <html lang="en" className={`${dmSans.variable} ${specialGothic.variable}`}>
       <body className="font-body antialiased">{children}</body>
     </html>
   );

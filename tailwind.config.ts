@@ -19,7 +19,7 @@ const config: Config = {
         "off-white": "#FAF8F5",
       },
       fontFamily: {
-        display: ["var(--font-instrument)", "sans-serif"],
+        display: ["var(--font-display)", "sans-serif"],
         body: ["var(--font-dm)", "sans-serif"],
       },
       letterSpacing: {

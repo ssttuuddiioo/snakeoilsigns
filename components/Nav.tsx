@@ -44,7 +44,7 @@ export default function Nav({ logo, siteTitle }: NavProps) {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-content mx-auto flex items-center justify-between px-6 py-4 md:px-12 md:py-5">
+        <div className="max-w-content mx-auto flex items-center justify-between px-6 py-5 md:px-12 md:py-6">
           {/* Logo */}
           <Link href="/" className="relative z-10">
             {logo ? (
@@ -56,19 +56,19 @@ export default function Nav({ logo, siteTitle }: NavProps) {
                 className="h-8 w-auto"
               />
             ) : (
-              <span className="font-display text-base md:text-lg tracking-tight font-bold text-white uppercase">
+              <span className="font-display text-lg md:text-xl text-white uppercase">
                 {siteTitle || "Snake Oil Signs"}
               </span>
             )}
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-6 lg:gap-8">
+          <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="group font-display text-[11px] tracking-[0.15em] uppercase text-white/70 hover:text-rust transition-colors duration-200"
+                className="font-display text-base xl:text-lg uppercase text-white/70 hover:text-rust transition-colors duration-200"
               >
                 {link.label}
               </Link>
@@ -78,10 +78,10 @@ export default function Nav({ logo, siteTitle }: NavProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="relative z-10 md:hidden flex items-center gap-2"
+            className="relative z-10 lg:hidden flex items-center gap-2"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
-            <span className="font-display text-[11px] tracking-[0.15em] uppercase text-white">
+            <span className="font-display text-base uppercase text-white">
               {menuOpen ? "CLOSE" : "MENU"}
             </span>
           </button>
@@ -90,17 +90,17 @@ export default function Nav({ logo, siteTitle }: NavProps) {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-ink transition-all duration-500 md:hidden ${
+        className={`fixed inset-0 z-40 bg-ink transition-all duration-500 lg:hidden ${
           menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex flex-col items-start justify-center h-full px-8 gap-6">
+        <div className="flex flex-col items-start justify-center h-full px-8 gap-5">
           {NAV_LINKS.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-display text-4xl sm:text-5xl uppercase tracking-tight font-bold text-white hover:text-rust transition-colors duration-200"
+              className="font-display text-5xl sm:text-6xl uppercase text-white hover:text-rust transition-colors duration-200"
               style={{
                 transitionDelay: menuOpen ? `${i * 60 + 100}ms` : "0ms",
                 opacity: menuOpen ? 1 : 0,
