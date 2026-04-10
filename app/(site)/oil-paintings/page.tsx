@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { client } from "@/sanity/lib/client";
 import { allProjectsQuery, siteSettingsQuery } from "@/sanity/lib/queries";
-import WorkGallery from "@/components/WorkGallery";
+import PaintingGallery from "@/components/PaintingGallery";
 import FadeIn from "@/components/FadeIn";
 
 const COMMISSION_STEPS = [
@@ -39,72 +39,79 @@ export default async function OilPaintingsPage() {
   const contactEmail = email || "snakeoilsigns@gmail.com";
 
   return (
-    <div className="pt-28 md:pt-36 pb-24 md:pb-36">
-      {/* Header */}
-      <div className="px-6 md:px-10 max-w-content mx-auto">
+    <div className="bg-white min-h-screen">
+      {/* Gallery */}
+      <div className="pt-32 md:pt-44">
+        <FadeIn>
+          <div className="px-10 md:px-16 lg:px-24 max-w-[1500px] mx-auto">
+            <PaintingGallery paintings={oilPaintings} />
+          </div>
+        </FadeIn>
+      </div>
+
+      {/* Header — below gallery */}
+      <div className="py-24 md:py-36 px-6 md:px-10 max-w-content mx-auto text-center">
         <FadeIn>
           <h1 className="font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-wide text-ink leading-[1.1]">
             Oil Paintings
           </h1>
-          <p className="mt-3 text-ink/60 text-base md:text-lg">
+          <p className="mt-6 text-ink/60 text-base md:text-lg leading-[1.8] max-w-2xl mx-auto">
+            Our work lives in the space between precision and imperfection. We train in the fundamentals so we can let go of them when it counts. The result is realism that breathes — raw, textured, and unmistakably human.
+          </p>
+          <p className="mt-4 text-ink/50 text-base md:text-lg max-w-lg mx-auto">
             Commission your own personal painting
           </p>
           <a
             href={`mailto:${contactEmail}`}
-            className="inline-flex items-center gap-2 mt-5 px-6 py-3 bg-ink text-cream text-sm font-display tracking-wider uppercase hover:bg-ink/85 transition-colors"
+            className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-ink text-cream text-sm font-display tracking-wider uppercase hover:bg-ink/85 transition-colors"
           >
             Inquire Now
           </a>
         </FadeIn>
       </div>
 
-      {/* Gallery */}
-      <FadeIn delay={150}>
-        <div className="mt-16 md:mt-24 px-6 md:px-10 max-w-content mx-auto">
-          <WorkGallery projects={oilPaintings} columns={2} showFilter={false} />
-        </div>
-      </FadeIn>
-
       {/* Commission Process */}
-      <section className="mt-28 md:mt-36 px-6 md:px-10 max-w-content mx-auto">
-        <FadeIn>
-          <div className="flex items-center gap-4 mb-14 md:mb-16">
-            <h2 className="font-display text-xs tracking-display uppercase text-muted whitespace-nowrap">
-              Commission Process
-            </h2>
-            <div className="flex-1 h-px bg-border" />
-          </div>
-        </FadeIn>
+      <section className="bg-neutral-50 py-24 md:py-32 px-6 md:px-10">
+        <div className="max-w-content mx-auto">
+          <FadeIn>
+            <div className="flex items-center gap-4 mb-14 md:mb-16">
+              <h2 className="font-display text-xs tracking-display uppercase text-muted whitespace-nowrap">
+                Commission Process
+              </h2>
+              <div className="flex-1 h-px bg-border" />
+            </div>
+          </FadeIn>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
-          {COMMISSION_STEPS.map((step, i) => (
-            <FadeIn key={step.num} delay={i * 80}>
-              <div>
-                <span className="font-display text-3xl md:text-4xl text-border font-semibold">
-                  {step.num}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12">
+            {COMMISSION_STEPS.map((step, i) => (
+              <FadeIn key={step.num} delay={i * 80}>
+                <div>
+                  <span className="font-display text-3xl md:text-4xl text-border font-semibold">
+                    {step.num}
+                  </span>
+                  <h3 className="font-display text-sm tracking-display uppercase text-ink mt-3 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-ink/60 leading-relaxed">{step.desc}</p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn>
+            <div className="mt-20 text-center">
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-2 font-display text-sm tracking-display uppercase text-rust hover:text-rust-dark transition-colors group"
+              >
+                Get a Quote for Your Painting
+                <span className="transition-transform duration-200 group-hover:translate-x-1">
+                  &rarr;
                 </span>
-                <h3 className="font-display text-sm tracking-display uppercase text-ink mt-3 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-ink/60 leading-relaxed">{step.desc}</p>
-              </div>
-            </FadeIn>
-          ))}
+              </Link>
+            </div>
+          </FadeIn>
         </div>
-
-        <FadeIn>
-          <div className="mt-20 text-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 font-display text-sm tracking-display uppercase text-rust hover:text-rust-dark transition-colors group"
-            >
-              Get a Quote for Your Painting
-              <span className="transition-transform duration-200 group-hover:translate-x-1">
-                &rarr;
-              </span>
-            </Link>
-          </div>
-        </FadeIn>
       </section>
     </div>
   );

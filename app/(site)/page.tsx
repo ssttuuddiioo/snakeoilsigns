@@ -34,7 +34,8 @@ export default async function HomePage() {
       {/* Hero Slideshow */}
       <HeroSlideshow
         projects={selectedProjects}
-        tagline={home?.heroTagline || "Snake Oil Signs"}
+        tagline={home?.heroTagline || "The proof is on the wall."}
+        heroImage={home?.heroImage}
       />
 
       {/* Selected Work */}

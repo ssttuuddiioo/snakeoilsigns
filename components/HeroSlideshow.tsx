@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { urlFor } from "@/sanity/lib/image";
 
 interface SlideProject {
@@ -14,23 +14,29 @@ interface SlideProject {
 interface HeroSlideshowProps {
   projects: SlideProject[];
   tagline?: string;
+  heroImage?: any;
 }
 
-export default function HeroSlideshow({ projects, tagline }: HeroSlideshowProps) {
+export default function HeroSlideshow({ projects, tagline, heroImage }: HeroSlideshowProps) {
   const [current, setCurrent] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const total = projects.length;
 
   const goTo = useCallback(
     (index: number) => {
       if (isTransitioning) return;
       setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrent(index);
-        setTimeout(() => setIsTransitioning(false), 600);
-      }, 400);
+      setPrev(current);
+      setCurrent(index);
+      // Clear previous after cross-dissolve completes
+      timeoutRef.current = setTimeout(() => {
+        setPrev(null);
+        setIsTransitioning(false);
+      }, 1200);
     },
-    [isTransitioning]
+    [isTransitioning, current]
   );
 
   // Auto-cycle
@@ -42,20 +48,67 @@ export default function HeroSlideshow({ projects, tagline }: HeroSlideshowProps)
     return () => clearInterval(timer);
   }, [current, total, goTo]);
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  const getImageSrc = (index: number) => {
+    const p = projects[index];
+    if (p?.featuredImage) return urlFor(p.featuredImage).width(1920).quality(85).url();
+    if (heroImage) return urlFor(heroImage).width(1920).quality(85).url();
+    return null;
+  };
+
+  const getImageAlt = (index: number) => {
+    return projects[index]?.title || tagline || "Hero";
+  };
+
   const slide = projects[current];
 
   return (
     <section className="relative h-screen w-full bg-ink overflow-hidden">
-      {/* Background image */}
-      {slide?.featuredImage && (
+      {/* Previous image — fading out underneath */}
+      {prev !== null && getImageSrc(prev) && (
+        <div className="absolute inset-0 opacity-100">
+          <Image
+            src={getImageSrc(prev)!}
+            alt={getImageAlt(prev)}
+            fill
+            className="object-cover"
+            sizes="100vw"
+          />
+        </div>
+      )}
+
+      {/* Current image — fading in on top */}
+      {getImageSrc(current) && (
         <div
-          className={`absolute inset-0 transition-opacity duration-600 ${
-            isTransitioning ? "opacity-0" : "opacity-100"
-          }`}
+          className="absolute inset-0 transition-opacity ease-in-out"
+          style={{
+            opacity: isTransitioning ? 0 : 1,
+            transitionDuration: isTransitioning ? "0ms" : "1200ms",
+          }}
         >
           <Image
-            src={urlFor(slide.featuredImage).width(1920).quality(85).url()}
-            alt={slide.title}
+            key={current}
+            src={getImageSrc(current)!}
+            alt={getImageAlt(current)}
+            fill
+            priority
+            className="object-cover animate-slow-zoom"
+            sizes="100vw"
+          />
+        </div>
+      )}
+
+      {/* Fallback: heroImage when no projects */}
+      {total === 0 && heroImage && (
+        <div className="absolute inset-0">
+          <Image
+            src={urlFor(heroImage).width(1920).quality(85).url()}
+            alt={tagline || "Hero"}
             fill
             priority
             className="object-cover animate-slow-zoom"
@@ -82,7 +135,7 @@ export default function HeroSlideshow({ projects, tagline }: HeroSlideshowProps)
         {/* Current project info + nav */}
         <div className="flex items-end justify-between gap-6">
           <div
-            className={`transition-all duration-400 ${
+            className={`transition-all duration-500 ${
               isTransitioning
                 ? "opacity-0 translate-y-2"
                 : "opacity-100 translate-y-0"

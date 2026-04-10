@@ -33,6 +33,9 @@ export default async function WorkPage() {
           <h1 className="font-display text-6xl md:text-7xl lg:text-[8rem] uppercase tracking-tight font-bold text-ink leading-[0.85]">
             Murals
           </h1>
+          <p className="mt-6 text-ink/60 text-base md:text-lg leading-[1.8] max-w-2xl">
+            Every mural starts the same way: we notice a wall that&apos;s not doing enough. Our work lives where people live, outside restaurants, down the block, on the walk home. A wall that used to be nothing becomes the thing people stop and photograph, the thing that brings foot traffic to a local business, the thing that makes someone care about art who never did before. We paint because a great mural doesn&apos;t just decorate a space. It changes the energy of an entire street.
+          </p>
         </FadeIn>
       </div>
 
